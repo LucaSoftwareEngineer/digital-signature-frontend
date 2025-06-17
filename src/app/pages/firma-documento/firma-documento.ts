@@ -4,6 +4,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirewallService } from '../../services/firewall-service';
+import SecureLS from 'secure-ls';
 
 @Component({
   selector: 'app-firma-documento',
@@ -16,6 +17,7 @@ export class FirmaDocumento implements OnInit {
   titolo:string = '';
   file:File | null = null;
   firma:string = '';
+  ls = new SecureLS();
   
   warning_titolo:Boolean = false;
   warning_file:Boolean = false;
@@ -59,7 +61,7 @@ export class FirmaDocumento implements OnInit {
       formData.append('titolo', this.titolo);
       formData.append('file', this.file, this.file.name);
       formData.append('firma', this.firma);
-      formData.append('idUtente', '1');
+      formData.append('idUtente', this.ls.get('user'));
       this.http.post<Boolean>('http://localhost:8080/api/documento/firma', formData).subscribe(
         res => {
           this.router.navigate(['/firma/documento/success']);

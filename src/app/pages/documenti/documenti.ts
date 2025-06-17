@@ -4,6 +4,7 @@ import { DocumentoService } from '../../services/documento-service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FirewallService } from '../../services/firewall-service';
+import SecureLS from 'secure-ls';
 
 @Component({
   selector: 'app-documenti',
@@ -14,6 +15,7 @@ import { FirewallService } from '../../services/firewall-service';
 export class Documenti implements OnInit {
 
   elencoDocumenti = signal<Array<IDocumento>>([]);
+  ls = new SecureLS();
 
   constructor(private firewall:FirewallService, private documentoService:DocumentoService, private router:Router) {}
 
@@ -25,8 +27,7 @@ export class Documenti implements OnInit {
   }
 
   getDocumenti() {
-    this.documentoService.getDocumenti('1').subscribe(res => {
-      console.log(res);
+    this.documentoService.getDocumenti(this.ls.get('user')).subscribe(res => {
       this.elencoDocumenti.set(res);
     })
   }
