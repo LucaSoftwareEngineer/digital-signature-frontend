@@ -1,1 +1,43 @@
-<p>firma-documento works!</p>
+<h1 class="font-bold text-2xl">Firma Documento</h1>
+<p class="mt-[10px] text-gray-500">Questo servizio ti consente di firmare i documenti.</p>
+
+<div class="mt-[20px] w-[100%] md:w-[37%] border-[1px] border-gray-200 p-[20px]">
+    <form enctype="multipart/form-data" (ngSubmit)="inviaFilePerFirma()" class="max-w-sm ml-[10px]">
+        <div class="mb-5">
+            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titolo</label>
+            <input type="text" [(ngModel)]="titolo" name="titolo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+
+        @if (warning_titolo) {
+        <div class="mb-5 text-red-600 text-[12px]">
+            *ATTENZIONE: inserisci il titolo
+        </div>
+        }
+
+        <div class="mb-5">
+            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">File</label>
+            <input (change)="fileSelezionato($event)" type="file">
+        </div>
+
+        @if (warning_file) {
+        <div class="mb-5 text-red-600 text-[12px]">
+            *ATTENZIONE: carica il file
+        </div>
+        }
+
+        <div class="mb-5">
+            <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Firma</label>
+            <input type="text" [(ngModel)]="firma" name="firma" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+
+        @if (warning_firma) {
+        <div class="mb-5 text-red-600 text-[12px]">
+            *ATTENZIONE: inserisci la firma
+        </div>
+        }
+        
+        <div class="mb-5">
+            <button type="submit" class="w-[100%] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">FIRMA DOCUMENTO</button>
+        </div>
+    </form>
+</div>
