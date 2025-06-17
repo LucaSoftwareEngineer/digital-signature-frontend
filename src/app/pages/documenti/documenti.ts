@@ -3,6 +3,7 @@ import { IDocumento } from '../../interfaces/IDocumento';
 import { DocumentoService } from '../../services/documento-service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FirewallService } from '../../services/firewall-service';
 
 @Component({
   selector: 'app-documenti',
@@ -14,9 +15,12 @@ export class Documenti implements OnInit {
 
   elencoDocumenti = signal<Array<IDocumento>>([]);
 
-  constructor(private documentoService:DocumentoService, router:Router) {}
+  constructor(private firewall:FirewallService, private documentoService:DocumentoService, private router:Router) {}
 
   ngOnInit(): void {
+    if (this.firewall.getUserIsLogged() == false) {
+      this.router.navigate(['/login']);
+    }
     this.getDocumenti();
   }
 

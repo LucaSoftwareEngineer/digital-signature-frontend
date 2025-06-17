@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FirewallService } from '../../services/firewall-service';
 
 @Component({
   selector: 'app-firma-documento',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './firma-documento.html',
   styleUrl: './firma-documento.css'
 })
-export class FirmaDocumento {
+export class FirmaDocumento implements OnInit {
 
   titolo:string = '';
   file:File | null = null;
@@ -20,7 +21,13 @@ export class FirmaDocumento {
   warning_file:Boolean = false;
   warning_firma:Boolean = false;
 
-  constructor(private http:HttpClient, private router:Router) {}
+  constructor(private firewall:FirewallService, private http:HttpClient, private router:Router) {}
+
+  ngOnInit(): void {
+    if (this.firewall.getUserIsLogged() == false) {
+      this.router.navigate(['/login']);
+    }
+  }
 
   fileSelezionato(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;

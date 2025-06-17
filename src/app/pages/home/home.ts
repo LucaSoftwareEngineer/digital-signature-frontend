@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FirewallService } from '../../services/firewall-service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,16 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
+export class Home implements OnInit {
+
+  constructor(private firewall:FirewallService, private router:Router) {}
+
+  ngOnInit(): void {
+    if (this.firewall.getUserIsLogged() == false) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  
 
 }

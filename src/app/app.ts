@@ -12,7 +12,7 @@ import { Footer } from "./components/footer/footer";
 })
 export class App implements OnInit {
   protected title = 'digital-signature-frontend';
-  
+
   ngOnInit(): void {
     initFlowbite();
   }
